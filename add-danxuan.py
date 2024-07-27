@@ -26,7 +26,7 @@ response = session.post(f'{net_url}{login_endpoint}', headers=headers, data=json
 print(response.text)
 
 for row in sheet.iter_rows(min_row=2, values_only=True):
-    print(row[3] + ' -- adding...')
+    print(str(row[3]) + ' -- is adding...')
     questionType = row[0]
     gradeLevel = row[1]
     subjectId = row[2]
@@ -58,8 +58,7 @@ for row in sheet.iter_rows(min_row=2, values_only=True):
         "score": score,
         "difficult": row[8]
     }
-    # response = requests.get(f'{centreon_api_url}{login_endpoint}', headers= headers)
-    # + '/api/admin/question/edit'
+    
     response = session.post(net_url + '/api/admin/question/edit', headers=headers, data=json.dumps(payload))
     if response.status_code < 300:
         data = json.dumps(response.json(), indent=4)
